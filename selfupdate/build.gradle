@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 
 def releaseVersion = "0.1"
-def bintrayUser = hasProperty('user') ? bintray_user : ""
-def bintrayApiKey = hasProperty('apikey') ? bintray_apikey : ""
+def bintrayUser = hasProperty('user') ? user : ""
+def bintrayApiKey = hasProperty('apikey') ? apikey : ""
 
 android {
     compileSdkVersion 26

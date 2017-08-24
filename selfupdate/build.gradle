@@ -1,9 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.jfrog.bintray'
 
 def releaseVersion = "0.1"
-def bintrayUser = hasProperty('user') ? user : ""
-def bintrayApiKey = hasProperty('apikey') ? apikey : ""
 
 android {
     compileSdkVersion 26
@@ -26,28 +23,28 @@ android {
     }
 }
 
-bintray {
-    user = bintrayUser
-    key = bintrayApiKey
-    publish = true
-    pkg {
-        repo = 'maven'
-        name = 'selfupdate'
-        desc = 'Possibles to selfupdate application.'
-        websiteUrl = 'https://github.com/wirgen/selfupdate-android'
-        issueTrackerUrl = 'https://github.com/wirgen/selfupdate-android/issues'
-        vcsUrl = 'https://github.com/wirgen/selfupdate-android.git'
-        licenses = ['Apache-2.0']
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'selfupdate'
 
-        githubRepo = 'wirgen/selfupdate-android'
-        githubReleaseNotesFile = 'README.md'
+    publishedGroupId = 'com.github.wirgen'
+    libraryName = 'SelfUpdate'
+    artifact = 'selfupdate'
 
-        version {
-            name = releaseVersion
-            released  = new Date()
-            vcsTag = releaseVersion
-        }
-    }
+    libraryDescription = 'Possibles to selfupdate application.'
+
+    siteUrl = 'https://github.com/wirgen/selfupdate-android'
+    gitUrl = 'https://github.com/wirgen/selfupdate-android.git'
+
+    libraryVersion = releaseVersion
+
+    developerId = 'wirgen'
+    developerName = 'Denis Nikiforov'
+    developerEmail = 'wirgen@wirgen.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
 }
 
 dependencies {
@@ -58,3 +55,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     testCompile 'junit:junit:4.12'
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

@@ -1,5 +1,9 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.jfrog.bintray'
+
+def releaseVersion = "0.1"
+def bintrayUser = hasProperty('user') ? bintray_user : ""
+def bintrayApiKey = hasProperty('apikey') ? bintray_apikey : ""
 
 android {
     compileSdkVersion 26
@@ -9,7 +13,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName releaseVersion
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -22,6 +26,30 @@ android {
     }
 }
 
+bintray {
+    user = bintrayUser
+    key = bintrayApiKey
+    publish = true
+    pkg {
+        repo = 'maven'
+        name = 'selfupdate'
+        desc = 'Possibles to selfupdate application.'
+        websiteUrl = 'https://github.com/wirgen/selfupdate-android'
+        issueTrackerUrl = 'https://github.com/wirgen/selfupdate-android/issues'
+        vcsUrl = 'https://github.com/wirgen/selfupdate-android.git'
+        licenses = ['Apache-2.0']
+
+        githubRepo = 'wirgen/selfupdate-android'
+        githubReleaseNotesFile = 'README.md'
+
+        version {
+            name = releaseVersion
+            released  = new Date()
+            vcsTag = releaseVersion
+        }
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -29,14 +57,4 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.+'
     testCompile 'junit:junit:4.12'
-}
-
-publish {
-    groupId = 'com.github.wirgen'
-    artifactId = 'selfupdate'
-    publishVersion = '0.1'
-    desc = 'Selfupdate possible for application.'
-    licences = ['Apache-2.0']
-    uploadName='SelfUpdate'
-    website = 'https://github.com/wirgen/selfupdate-android.git'
 }
